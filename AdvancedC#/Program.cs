@@ -1,6 +1,10 @@
-﻿namespace AdvancedC_
+﻿using AdvancedC_.ExceptionExample;
+using System.Drawing;
+
+namespace AdvancedC_
 {
-    internal class Program
+    public delegate void C(int x);
+    internal class Programs
     {
         static void Main(string[] args)
         {
@@ -9,9 +13,9 @@
             var s = new Person("MAY", "HANY");
 
             var a = new Any<Person>();
-            a.Add(p);
-            a.Add(s);
-            a.Display();
+            //a.Add(p);
+            //a.Add(s);
+            //a.Display();
 
             //a.Add(1);
             //a.Add(2);
@@ -24,20 +28,69 @@
 
             #region Generic Delegate Type
             IEnumerable<int> l = new int[] { 1, 2, 5, 3, 4, 6, 7, 8, 9, 10 };
-            IEnumerable<decimal> d = new decimal[] { 1.22m, 3.55m ,5.55m, 3.99m, 4.99m, 6.44m, 7.66m, 8.22m, 9.11m, 10.00m };
+            IEnumerable<decimal> d = new decimal[] { 1.22m, 3.55m, 5.55m, 3.99m, 4.99m, 6.44m, 7.66m, 8.22m, 9.11m, 10.00m };
 
-            PrintNumber(l, x=>x>6 , ()=> Console.WriteLine("numbers greater than 6"));
+            //PrintNumber(l, x => x > 6, () => Console.WriteLine("numbers greater than 6"));
 
-            PrintNumber(l, x => x > 7, () => Console.WriteLine("numbers greater than 7"));
+            //PrintNumber(l, x => x > 7, () => Console.WriteLine("numbers greater than 7"));
 
-            PrintNumber(l, x => x % 2 == 0, () => Console.WriteLine("Is Even"));
+            //PrintNumber(l, x => x % 2 == 0, () => Console.WriteLine("Is Even"));
 
 
 
             #endregion
+
+            #region Exceptions 
+            Delivery process1 = new Delivery()
+            {
+                Id = 1,
+                Name = "Mohamed Hany",
+                Address = "Minya",
+                Status = DeliveryStatus.UNKNOWN
+            };
+
+            //Console.WriteLine(process1);
+
+            var service = new Service();
+            //service.Start(process1);
+
+            //Console.WriteLine(process1);
+
+            #endregion
+
+
+
+            #region GenericAdvanced
+
+            Point[] Points =
+            {
+                new Point(5, 9),
+                new Point(2, 5),
+                new Point(6, 4),
+                new Point(3, 0),
+            };
+
+            Helper<Point>.BubbleSort(Points);
+            foreach (Point item in Points)
+                Console.WriteLine(item);
+
+            Employeeees[] emps = new Employeeees[] {
+                new Employeeees(5,"Mohamed",6050),
+                new Employeeees(6,"Amr",1000),
+                new Employeeees(7,"Hany",8000),
+                new Employeeees(8,"Sohilaa",9000),
+            }; 
+
+            Helper<Employeeees>.BubbleSort(emps);
+            foreach (Employeeees e in emps)
+                Console.WriteLine(e);
+
+            #endregion
+            Console.ReadKey();
+
         }
 
-        static void PrintNumber<T>(IEnumerable<T> nums, Predicate<T> predicate,Action a)
+        static void PrintNumber<T>(IEnumerable<T> nums, Predicate<T> predicate, Action a)
         {
             a();
             foreach (T n in nums)
@@ -47,6 +100,13 @@
                     Console.WriteLine(n);
                 }
             }
+        }
+
+        static int BadMethod()
+        {
+            var x = 2;
+            var y = 0;
+            return x / y;
         }
 
         #region Generic
@@ -117,4 +177,9 @@
     }
 }
 #endregion
+
+
+
+
+
 
