@@ -1,14 +1,17 @@
-﻿using AdvancedC_.ExceptionExample;
+﻿using System.Collections;
+using AdvancedC_.ExceptionExample;
 using System.Drawing;
 
 namespace AdvancedC_
 {
     public delegate void C(int x);
+
     internal class Programs
     {
         static void Main(string[] args)
         {
             #region Generic
+
             var p = new Person("Mohamed", "Hany");
             var s = new Person("MAY", "HANY");
 
@@ -27,8 +30,10 @@ namespace AdvancedC_
             #endregion
 
             #region Generic Delegate Type
+
             IEnumerable<int> l = new int[] { 1, 2, 5, 3, 4, 6, 7, 8, 9, 10 };
-            IEnumerable<decimal> d = new decimal[] { 1.22m, 3.55m, 5.55m, 3.99m, 4.99m, 6.44m, 7.66m, 8.22m, 9.11m, 10.00m };
+            IEnumerable<decimal> d = new decimal[]
+                { 1.22m, 3.55m, 5.55m, 3.99m, 4.99m, 6.44m, 7.66m, 8.22m, 9.11m, 10.00m };
 
             //PrintNumber(l, x => x > 6, () => Console.WriteLine("numbers greater than 6"));
 
@@ -36,11 +41,10 @@ namespace AdvancedC_
 
             //PrintNumber(l, x => x % 2 == 0, () => Console.WriteLine("Is Even"));
 
-
-
             #endregion
 
-            #region Exceptions 
+            #region Exceptions
+
             Delivery process1 = new Delivery()
             {
                 Id = 1,
@@ -59,7 +63,6 @@ namespace AdvancedC_
             #endregion
 
 
-
             #region GenericAdvanced
 
             Point[] Points =
@@ -74,20 +77,51 @@ namespace AdvancedC_
             foreach (Point item in Points)
                 Console.WriteLine(item);
 
-            Employeeees[] emps = new Employeeees[] {
-                new Employeeees(5,"Mohamed",6050),
-                new Employeeees(6,"Amr",1000),
-                new Employeeees(7,"Hany",8000),
-                new Employeeees(8,"Sohilaa",9000),
-            }; 
+            Employeeees[] emps = new Employeeees[]
+            {
+                new Employeeees(5, "Mohamed", 6050),
+                new Employeeees(6, "Amr", 1000),
+                new Employeeees(7, "Hany", 8000),
+                new Employeeees(8, "Sohilaa", 9000),
+            };
 
             Helper<Employeeees>.BubbleSort(emps);
             foreach (Employeeees e in emps)
                 Console.WriteLine(e);
 
             #endregion
-            Console.ReadKey();
 
+            #region DelegateAdvanced
+
+            Console.WriteLine("======================================");
+            int[] arrr = new int[] { 1, 5, 3, 9, 22, 36, 4, 6, 11, 19 };
+            SortingDele.BubbleSort(arrr, Compare.CompareDesc);
+            foreach (int item in arrr)
+                Console.WriteLine(item);
+
+            #endregion
+
+            Employe e1 = new Employe()
+            {
+                id = 10,
+                name = "John Doe",
+                age = 15,
+            };
+            Employe e2 = new Employe()
+            {
+                id = 10,
+                name = "John Doe",
+                age = 15,
+            };
+
+            FiveIntegers nums = new FiveIntegers(1,2,3,4,5);
+            foreach (var num in nums)
+            {
+                Console.WriteLine($"this number is {num} ");
+                
+            }
+            Console.WriteLine(e1.Equals(e2));
+            Console.ReadKey();
         }
 
         static void PrintNumber<T>(IEnumerable<T> nums, Predicate<T> predicate, Action a)
@@ -110,6 +144,7 @@ namespace AdvancedC_
         }
 
         #region Generic
+
         class Person
         {
             private string fname;
@@ -126,9 +161,11 @@ namespace AdvancedC_
                 return $"'{fname} {lname}'";
             }
         }
+
         class Any<T> where T : class
         {
             private T[] _items;
+
             public void Add(T item)
             {
                 if (_items == null)
@@ -143,6 +180,7 @@ namespace AdvancedC_
                     _items = dest;
                 }
             }
+
             public void RemoveAt(int position)
             {
                 if (_items == null)
@@ -156,6 +194,7 @@ namespace AdvancedC_
                         continue;
                     dest[index++] = _items[i];
                 }
+
                 _items = dest;
             }
 
@@ -171,15 +210,31 @@ namespace AdvancedC_
                     if (i < _items.Length - 1)
                         Console.Write(", ");
                 }
+
                 Console.WriteLine("]");
             }
+
+        }
+    }
+
+}
+
+class FiveIntegers : IEnumerable
+{
+    private int[] fives;
+
+    public FiveIntegers(int n1, int n2, int n3, int n4,int n5)
+    {
+       fives =new int []{n1, n2, n3, n4, n5}; 
+    }
+
+    public IEnumerator GetEnumerator()
+    {
+        foreach (var item in fives)
+        {
+            yield return item;
         }
     }
 }
-#endregion
-
-
-
-
-
+    #endregion
 
