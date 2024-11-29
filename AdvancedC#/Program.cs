@@ -62,7 +62,6 @@ namespace AdvancedC_
 
             #endregion
 
-
             #region GenericAdvanced
 
             Point[] Points =
@@ -74,8 +73,8 @@ namespace AdvancedC_
             };
 
             Helper<Point>.BubbleSort(Points);
-            foreach (Point item in Points)
-                Console.WriteLine(item);
+            // foreach (Point item in Points)
+                // Console.WriteLine(item);
 
             Employeeees[] emps = new Employeeees[]
             {
@@ -86,20 +85,35 @@ namespace AdvancedC_
             };
 
             Helper<Employeeees>.BubbleSort(emps);
-            foreach (Employeeees e in emps)
-                Console.WriteLine(e);
+            //foreach (Employeeees e in emps)
+            //    Console.WriteLine(e);
 
             #endregion
 
             #region DelegateAdvanced
 
-            Console.WriteLine("======================================");
+            //Console.WriteLine("======================================");
             int[] arrr = new int[] { 1, 5, 3, 9, 22, 36, 4, 6, 11, 19 };
-            SortingDele.BubbleSort(arrr, Compare.CompareDesc);
-            foreach (int item in arrr)
-                Console.WriteLine(item);
+            SortingDelegate.BubbleSort(arrr, Compare.CompareDesc);
+            //foreach (int item in arrr)
+            //    Console.WriteLine(item);
 
             #endregion
+
+            #region Extension Method
+
+            DateTime dt = DateTime.Now;
+            Console.WriteLine($"DateTime: {dt}");
+            // dt = new DateTime(2000, 1, 1);
+            // Console.WriteLine($"DateTime: {dt}");
+            dt = dt.AddDays(4);
+            // Console.WriteLine(dt);
+            // Console.WriteLine(dt.IsWeekday());
+            // Console.WriteLine(dt.IsWeekend());
+            DateTimeOffset offset = DateTimeOffset.Now;
+            // Console.WriteLine(offset);
+            #endregion
+            
 
             Employe e1 = new Employe()
             {
@@ -114,13 +128,13 @@ namespace AdvancedC_
                 age = 15,
             };
 
-            FiveIntegers nums = new FiveIntegers(1,2,3,4,5);
-            foreach (var num in nums)
-            {
-                Console.WriteLine($"this number is {num} ");
-                
-            }
-            Console.WriteLine(e1.Equals(e2));
+            FiveIntegers nums = new FiveIntegers(1, 2, 3, 4, 5);
+            // foreach (var num in nums)
+            // {
+            //     Console.WriteLine($"this number is {num} ");
+            // }
+
+            //Console.WriteLine(e1.Equals(e2));
             Console.ReadKey();
         }
 
@@ -213,19 +227,19 @@ namespace AdvancedC_
 
                 Console.WriteLine("]");
             }
-
         }
-    }
 
+        #endregion
+    }
 }
 
 class FiveIntegers : IEnumerable
 {
     private int[] fives;
 
-    public FiveIntegers(int n1, int n2, int n3, int n4,int n5)
+    public FiveIntegers(int n1, int n2, int n3, int n4, int n5)
     {
-       fives =new int []{n1, n2, n3, n4, n5}; 
+        fives = new int[] { n1, n2, n3, n4, n5 };
     }
 
     public IEnumerator GetEnumerator()
@@ -236,5 +250,31 @@ class FiveIntegers : IEnumerable
         }
     }
 }
-    #endregion
+
+public delegate bool CompareFuncDelegate(int x, int y);
+
+internal static class SortingDelegate
+{
+    public static void BubbleSort(int[] arr, CompareFuncDelegate dele)
+    {
+        for (var i = 0; i < arr.Length; i++)
+        for (var j = 0; j < arr.Length - i - 1; j++)
+            if (dele(arr[j], arr[j + 1]))
+                Swap(ref arr[j], ref arr[j + 1]);
+    }
+
+
+    private static void Swap(ref int x, ref int y)
+    {
+        (x, y) = (y, x);
+    }
+}
+
+internal static class Compare
+{
+    public static bool CompareDesc(int x, int y)
+    {
+        return x < y;
+    }
+}
 
